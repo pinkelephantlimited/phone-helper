@@ -88,17 +88,24 @@ class VLDataCollator:
             batch = parts[0]
         else:
             import torch
+            seq_keys = [k for k in parts[0]
+                        if k in parts[1] and len(parts[0][k].shape) == 2]
             seq_len = max(p["input_ids"].shape[1] for p in parts)
-            padded = []
-            for p in parts:
-                pad = seq_len - p["input_ids"].shape[1]
-                if pad:
-                    p = {k: torch.nn.functional.pad(
-                        v, (0, pad), value=self.processor.tokenizer.pad_token_id if k in (
-                            "input_ids", "labels") else 0) for k, v in p.items()}
-                padded.append(p)
-            batch = {k: torch.cat([p[k] for p in padded], dim=0)
-                     for k in padded[0]}
+            merged = {}
+            for k in seq_keys:
+                pad_id = (self.processor.tokenizer.pad_token_id
+                          if k in ("input_ids", "labels") else 0)
+                merged[k] = torch.cat([
+                    torch.nn.functional.pad(
+                        p[k], (0, seq_len - p[k].shape[1]), value=pad_id)
+                    for p in parts
+                ], dim=0)
+            for k in parts[0]:
+                if k not in seq_keys and k not in merged:
+                    chunks = [p[k] for p in parts if k in p]
+                    if chunks:
+                        merged[k] = torch.cat(chunks, dim=0)
+            batch = merged
         batch["labels"] = batch["input_ids"].clone()
         return batch
 
