@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.python-version
+
+# Secrets / tokens
+.env
+*.token
+*_token.txt
+
+# Data (generated)
+data/en/*.jsonl
+data/multilingual/*.jsonl
+data/multilingual/
+data/images/
+data/translation_cache.json
+!data/*.md
+!data/pipeline/*.py
+!data/pipeline/requirements.txt
+
+# Models / checkpoints
+train/checkpoints/
+*.safetensors
+*.gguf
+*.bin
+models/
+
+# HF cache / auth
+.huggingface/
+~/.cache/huggingface/
+
+# Node / React Native
+node_modules/
+app/ios/build/
+app/android/build/
+app/android/.gradle/
+*.apk
+*.aab
+.DS_Store
+
+# OS
+.DS_Store
+Thumbs.db
