@@ -127,8 +127,8 @@ def train(dataset, model_id: str = "Qwen/Qwen2.5-VL-3B-Instruct",
     )
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         model_id, quantization_config=bnb, torch_dtype=torch.bfloat16,
-        device_map="auto", trust_remote_code=True,
-    )
+        trust_remote_code=True,
+    ).to("cuda")
     processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
     model = prepare_model_for_kbit_training(model)
     model.config.use_cache = False
