@@ -30,6 +30,7 @@ from transformers import (
     TrainerCallback,
     TrainingArguments,
 )
+from transformers.trainer_callback import ExportableState
 from transformers.trainer_utils import get_last_checkpoint
 
 
@@ -75,9 +76,12 @@ class VLDataCollator:
         return batch
 
 
-class EvalLossCallback(TrainerCallback):
+class EvalLossCallback(TrainerCallback, ExportableState):
     def on_evaluate(self, args, state, control, metrics, **kwargs):
         print(f"[eval] step={state.global_step} eval_loss={metrics.get('eval_loss'):.4f}")
+
+    def state(self) -> dict:
+        return {}
 
 
 def _push_model_card(hub_repo: str, dataset: Dataset, token: str) -> None:
