@@ -58,20 +58,47 @@ class VLDataCollator:
 
     def __call__(self, features):
         from PIL import Image
-        images, texts = [], []
+        img_texts, txt_texts, img_list = [], [], []
         for f in features:
-            img = None
-            for m in f["messages"]:
-                for c in m["content"]:
-                    if c.get("type") == "image":
-                        img = Image.open(f["image"])
-            texts.append(self.processor.apply_chat_template(
-                f["messages"], tokenize=False, add_generation_prompt=False))
-            images.append(img)
-        batch = self.processor(
-            text=texts, images=images, return_tensors="pt",
-            padding=True, truncation=True, max_length=self.max_length,
-        )
+            has_img = any(
+                c.get("type") == "image"
+                for m in f["messages"] for c in m["content"]
+            )
+            text = self.processor.apply_chat_template(
+                f["messages"], tokenize=False, add_generation_prompt=False)
+            if has_img:
+                img_texts.append(text)
+                img_list.append(Image.open(f["image"]))
+            else:
+                txt_texts.append(text)
+        parts = []
+        if img_texts:
+            parts.append(self.processor(
+                text=img_texts, images=img_list, return_tensors="pt",
+                padding=True, truncation=True, max_length=self.max_length,
+            ))
+        if txt_texts:
+            parts.append(self.processor(
+                text=txt_texts, images=None, return_tensors="pt",
+                padding=True, truncation=True, max_length=self.max_length,
+            ))
+        if not parts:
+            raise ValueError("empty batch")
+        if len(parts) == 1:
+            batch = parts[0]
+        else:
+            import torch
+            seq_len = max(p["input_ids"].shape[1] for p in parts)
+            padded = []
+            for p in parts:
+                pad = seq_len - p["input_ids"].shape[1]
+                if pad:
+                    p = {k: torch.nn.functional.pad(
+                        v, (0, pad), value=self.processor.tokenizer.pad_token_id if k in (
+                            "input_ids", "labels") else 0) for k, v in p.items()}
+                padded.append(p)
+            batch = {k: torch.cat([p[k] for p in padded], dim=0)
+                     for k in padded[0]}
         batch["labels"] = batch["input_ids"].clone()
         return batch
 
