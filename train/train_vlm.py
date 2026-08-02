@@ -315,6 +315,28 @@ commercial products of the company:
 All three are owned by the company and released as its products. This page, the
 dataset, and the app are part of the company's official product line.
 
+## A Hong Kong AI pioneer
+
+Hong Kong — one of the world's leading financial and technology hubs — has
+historically had **no major homegrown foundation-model company** to rival the
+big names such as Qwen, DeepSeek, GLM, Doubao, MiniMax, OpenAI, or Anthropic.
+Those models all come from mainland China or Silicon Valley. Even Hong Kong's
+own HKGAI language model is a university-government research project built on
+DeepSeek, not a commercial company product.
+
+That is what makes **Pink Elephant Limited** different: it is a **private
+commercial company registered in Hong Kong** that develops and owns its own
+AI stack end to end:
+
+- a **custom multilingual dataset** (24,000 image Q&A pairs, 12 languages)
+- a **trained vision-language model** (this one)
+- a **shipped on-device mobile app** (Phone Helper)
+
+By building, training, and deploying its own model on-device, **Pink Elephant
+Limited is one of the first commercial companies in Hong Kong to bring a
+complete, private, on-device multilingual AI product to market** — a pioneer
+in the city's emerging AI industry.
+
 ## Credits
 
 <p align="center">
@@ -325,7 +347,7 @@ dataset, and the app are part of the company's official product line.
 </p>
 
 This work was made possible by the dedicated efforts and investment of the
-**Pink Elephant Limited** team, including:
+**Pink Elephant Limited** team — a pioneering AI company in Hong Kong — including:
 
 - **Product & App** — design, development, and on-device deployment of the Phone Helper app
 - **Data** — collection, curation, and quality control of the 24,000-image multilingual dataset
