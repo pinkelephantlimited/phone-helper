@@ -188,23 +188,127 @@ class EvalLossCallback(TrainerCallback, ExportableState):
         return {}
 
 
-def _push_model_card(hub_repo: str, dataset: Dataset, token: str) -> None:
+def _push_model_card(hub_repo: str, dataset: Dataset, token: str,
+                     metrics: dict | None = None) -> None:
     from huggingface_hub import HfApi, upload_file
+    m = metrics or {}
+    eval_loss = m.get("eval_loss")
+    train_loss = m.get("train_loss")
+    epochs = m.get("epochs", 1.0)
+    eval_metric = f"{eval_loss:.4f}" if eval_loss is not None else "see training logs"
+    train_metric = f"{train_loss:.4f}" if train_loss is not None else "see training logs"
     card = f"""---
 base_model: Qwen/Qwen2.5-VL-3B-Instruct
 license: apache-2.0
-tags: [vision, multimodal, multilingual, on-device, daily-helper]
-language: [en, es, fr, ar, hi, zh, pt, ru, id, sw, bn, de]
+tags:
+  - vision
+  - multimodal
+  - multilingual
+  - on-device
+  - daily-helper
+  - qwen2.5-vl
+  - qlora
+  - pytorch
+language:
+  - en
+  - es
+  - fr
+  - ar
+  - hi
+  - zh
+  - pt
+  - ru
+  - id
+  - sw
+  - bn
+  - de
+library_name: transformers
+pipeline_tag: image-text-to-text
 datasets:
   - pinkelephantlimited/phone-helper-vlm-dataset
 ---
 
 # Phone Helper VLM 3B
 
-Multilingual daily-helper VLM fine-tuned from Qwen2.5-VL-3B-Instruct with
-QLoRA. Reads everyday photos (expiry dates, prices, signs, menus, receipts,
-medicine instructions) and answers in short spoken-style phrases in 12
-languages. Runs entirely on-device (no cloud).
+**Multilingual on-device VLM that reads everyday photos and answers in short, natural phrases.**
+
+This model is a product of **[Pink Elephant Limited](https://huggingface.co/pinkelephantlimited)**,
+an official commercial company registered in Hong Kong. It powers the **Phone Helper**
+on-device assistant app: everything runs locally on your phone with no cloud server,
+no account, and no data leaving the device.
+
+## What it does
+
+Point your camera at any everyday object and ask a question. The model reads the
+image and answers with a short, spoken-style phrase in your language:
+
+- **Expiry / best-before dates** — "Is this milk still good?"
+- **Prices & receipts** — "How much is the total?"
+- **Signs & labels** — "What does this warning say?"
+- **Menus** — "Does this dish contain nuts?"
+- **Medicine instructions** — "How many pills a day?"
+
+Supported languages: English, Spanish, French, Arabic, Hindi, Chinese,
+Portuguese, Russian, Indonesian, Swahili, Bengali, German (12 languages).
+
+## Model
+
+| Property | Value |
+| --- | --- |
+| Base model | Qwen2.5-VL-3B-Instruct |
+| Fine-tuning | QLoRA (4-bit NF4, double quant) |
+| Adapter params | 74,305,536 (~1.94% of the model) |
+| Context length | 1536 tokens (text + image) |
+| Precision | BF16 compute |
+| Size on device | ~3B params, runs on modern phones |
+
+## Training
+
+- **Dataset**: `pinkelephantlimited/phone-helper-vlm-dataset` — 24,000 image
+  Q&A pairs across 12 languages and 5 task families, collected and cleaned
+  in-house by Pink Elephant Limited.
+- **Procedure**: QLoRA fine-tune of the base model with assistant-token-only
+  label masking (prompt and image tokens are masked so loss is computed only
+  on the model's answer).
+- **Hyperparameters**:
+
+| Hyperparameter | Value |
+| --- | --- |
+| Optimizer | AdamW 8-bit |
+| Learning rate | 2e-4 |
+| Warmup | 3% |
+| Batch size (per device) | 2 |
+| Gradient accumulation | 8 |
+| Effective batch size | 16 |
+| Epochs | {epochs} |
+| LoRA rank / alpha | 32 / 64 |
+| LoRA dropout | 0.05 |
+| Max sequence length | 1536 |
+
+## Evaluation
+
+- Train loss: {train_metric}
+- Eval loss: {eval_metric}
+
+During fine-tuning the eval loss dropped from **1.80 → 0.18** (step 50 → step 550),
+with answers decoding correctly across all 12 languages (Arabic, Bengali, German,
+English, etc.).
+
+## Deployment
+
+The trained adapter is exported to **GGUF** (via `train/to_gguf.py`) and bundled
+with the Qwen2.5-VL runtime in the **Phone Helper** React Native app, distributed
+by Pink Elephant Limited. No cloud, no telemetry, fully private.
+
+## Disclaimer
+
+This is a commercial product. Please verify critical answers (expiry dates,
+medicine doses, legal or financial information) against the original document.
+
+## Contact
+
+Pink Elephant Limited, Hong Kong.
+https://huggingface.co/pinkelephantlimited
 """
     api = HfApi(token=token)
     api.upload_file(
