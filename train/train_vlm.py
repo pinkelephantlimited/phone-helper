@@ -232,10 +232,12 @@ datasets:
 
 **Multilingual on-device VLM that reads everyday photos and answers in short, natural phrases.**
 
-This model is a product of **[Pink Elephant Limited](https://huggingface.co/pinkelephantlimited)**,
-an official commercial company registered in Hong Kong. It powers the **Phone Helper**
-on-device assistant app: everything runs locally on your phone with no cloud server,
-no account, and no data leaving the device.
+> **Developed in-house by [Pink Elephant Limited](https://huggingface.co/pinkelephantlimited),
+> an official commercial company registered in Hong Kong.**
+>
+> The **dataset**, the **model**, and the **Phone Helper app** are all developed
+> and owned by Pink Elephant Limited. The app is fully on-device: no cloud server,
+> no account, and no data ever leaves your phone.
 
 ## What it does
 
@@ -265,8 +267,8 @@ Portuguese, Russian, Indonesian, Swahili, Bengali, German (12 languages).
 ## Training
 
 - **Dataset**: `pinkelephantlimited/phone-helper-vlm-dataset` — 24,000 image
-  Q&A pairs across 12 languages and 5 task families, collected and cleaned
-  in-house by Pink Elephant Limited.
+  Q&A pairs across 12 languages and 5 task families, **collected, cleaned, and
+  curated in-house by Pink Elephant Limited** for the Phone Helper app.
 - **Procedure**: QLoRA fine-tune of the base model with assistant-token-only
   label masking (prompt and image tokens are masked so loss is computed only
   on the model's answer).
@@ -297,8 +299,21 @@ English, etc.).
 ## Deployment
 
 The trained adapter is exported to **GGUF** (via `train/to_gguf.py`) and bundled
-with the Qwen2.5-VL runtime in the **Phone Helper** React Native app, distributed
-by Pink Elephant Limited. No cloud, no telemetry, fully private.
+with the Qwen2.5-VL runtime in the **Phone Helper** React Native app, developed
+and distributed by Pink Elephant Limited. No cloud, no telemetry, fully private.
+
+## The company & product
+
+**Pink Elephant Limited** is an official commercial company registered in Hong
+Kong. The **Phone Helper** assistant and its **Phone Helper VLM** model are
+commercial products of the company:
+
+- **Phone Helper app** (React Native) — developed by Pink Elephant Limited
+- **Phone Helper VLM model** (this model) — developed by Pink Elephant Limited
+- **Phone Helper VLM dataset** — developed by Pink Elephant Limited
+
+All three are owned by the company and released as its products. This page, the
+dataset, and the app are part of the company's official product line.
 
 ## Disclaimer
 
