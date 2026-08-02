@@ -35,30 +35,87 @@ from transformers.trainer_utils import get_last_checkpoint
 
 
 def load_dataset(paths: list[Path]) -> Dataset:
+    """Load JSONL rows, resolving ``image`` paths to existing files.
+
+    The image field in the JSONLs references ``data/images/<lang>/x.jpg``
+    relative to the dataset repo root, but the on-disk layout may differ
+    (git clone of the HF repo, repo checkout, etc.). Candidate locations are
+    tried so training never breaks on a missing image.
+    """
     rows = []
-    repo_root = Path(__file__).resolve().parents[1]
     for p in paths:
+        base = p.parent
+        jsonl = p.resolve()
         for line in p.open():
             line = line.strip()
             if not line:
                 continue
             r = json.loads(line)
             if r.get("image"):
-                r["image"] = str(repo_root / r["image"])
+                r["image"] = _resolve_image(jsonl, base, r["image"])
             rows.append(r)
     return Dataset.from_list(rows)
 
 
+def _resolve_image(jsonl: Path, base: Path, image: str) -> str:
+    img = Path(image)
+    if img.is_absolute():
+        return str(img) if img.exists() else image
+    root = jsonl.parent
+    while not (root / ".git").exists() and root != root.parent:
+        root = root.parent
+    candidates = [
+        base / img,
+        base.parent / img,          # dataset repo root / data/images/...
+        root / img,
+    ]
+    # HF repo stores images at images/<lang>/ but JSONL says data/images/<lang>/
+    for cand in candidates:
+        if cand.exists():
+            return str(cand)
+    rel = image.replace("data/images/", "images/", 1)
+    for cand in [root / rel, base.parent / rel]:
+        if cand.exists():
+            return str(cand)
+    return str(base / img)
+
+
 class VLDataCollator:
-    """Collate JSONL samples into processor tokens on the fly (vision + text)."""
+    """Collate JSONL samples into processor tokens on the fly (vision + text).
+
+    Labels are masked so loss is computed only on the assistant answer tokens:
+    system/user/image tokens get label -100. Per-sample prompt lengths are
+    computed by tokenizing each conversation's prefix (``messages[:-1]`` with a
+    generation prompt); tokenization of the shared prefix is identical in both
+    calls, so those positions are safely masked after padding.
+    """
 
     def __init__(self, processor, max_length: int = 1536):
         self.processor = processor
         self.max_length = max_length
 
+    def _prompt_len(self, messages, image):
+        from PIL import Image
+        prompt_messages = messages[:-1]
+        prompt_text = self.processor.apply_chat_template(
+            prompt_messages, tokenize=False, add_generation_prompt=True)
+        if image is not None:
+            ids = self.processor(
+                text=[prompt_text], images=[Image.open(image)],
+                return_tensors="pt", truncation=True,
+                max_length=self.max_length,
+            )["input_ids"]
+        else:
+            ids = self.processor(
+                text=[prompt_text], images=None, return_tensors="pt",
+                truncation=True, max_length=self.max_length,
+            )["input_ids"]
+        return ids.shape[1]
+
     def __call__(self, features):
         from PIL import Image
         img_texts, txt_texts, img_list = [], [], []
+        img_prompt_lens, txt_prompt_lens = [], []
         for f in features:
             has_img = any(
                 c.get("type") == "image"
@@ -66,11 +123,14 @@ class VLDataCollator:
             )
             text = self.processor.apply_chat_template(
                 f["messages"], tokenize=False, add_generation_prompt=False)
+            img_path = f.get("image") if has_img else None
             if has_img:
                 img_texts.append(text)
                 img_list.append(Image.open(f["image"]))
+                img_prompt_lens.append(self._prompt_len(f["messages"], f["image"]))
             else:
                 txt_texts.append(text)
+                txt_prompt_lens.append(self._prompt_len(f["messages"], None))
         parts = []
         if img_texts:
             parts.append(self.processor(
@@ -106,13 +166,23 @@ class VLDataCollator:
                     if chunks:
                         merged[k] = torch.cat(chunks, dim=0)
             batch = merged
-        batch["labels"] = batch["input_ids"].clone()
+
+        prompt_lens = img_prompt_lens + txt_prompt_lens
+        labels = batch["input_ids"].clone()
+        labels[labels == self.processor.tokenizer.pad_token_id] = -100
+        for i, plen in enumerate(prompt_lens):
+            labels[i, :plen] = -100
+        batch["labels"] = labels
         return batch
 
 
 class EvalLossCallback(TrainerCallback, ExportableState):
     def on_evaluate(self, args, state, control, metrics, **kwargs):
-        print(f"[eval] step={state.global_step} eval_loss={metrics.get('eval_loss'):.4f}")
+        loss = metrics.get("eval_loss")
+        if loss is not None:
+            print(f"[eval] step={state.global_step} eval_loss={loss:.4f}")
+        else:
+            print(f"[eval] step={state.global_step} no eval_loss in {metrics}")
 
     def state(self) -> dict:
         return {}
@@ -227,7 +297,7 @@ def train(dataset, model_id: str = "Qwen/Qwen2.5-VL-3B-Instruct",
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="../data/multilingual")
-    ap.add_argument("--model", default="Qwen/Qwen2.5-VL-3B-Instruct")
+    ap.add_argument("--model", default="pinkelephantlimited/qwen2.5-vl-3b-instruct-nested")
     ap.add_argument("--out", default="pinkelephantlimited/phone-helper-vlm-3b")
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--epochs", type=float, default=1.0)
@@ -238,7 +308,9 @@ def main() -> None:
     ap.add_argument("--lora-r", type=int, default=32)
     args = ap.parse_args()
 
-    paths = sorted(Path(args.dataset).resolve().glob("*/train.jsonl"))
+    base = Path(args.dataset).resolve()
+    paths = sorted((base / "data").glob("*/train.jsonl")) \
+        if (base / "data").exists() else sorted(base.glob("*/train.jsonl"))
     paths = [p for p in paths if p.exists()]
     print(f"Loading {len(paths)} language files")
     ds = load_dataset(paths)

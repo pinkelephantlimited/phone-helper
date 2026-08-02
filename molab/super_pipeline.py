@@ -55,15 +55,27 @@ def _(mo):
 def _(HF_TOKEN):
     import json
     import os
+    import subprocess
     import sys
     from pathlib import Path
 
     os.environ["HF_TOKEN"] = HF_TOKEN.value or os.environ.get("HF_TOKEN", "")
 
+    missing = []
+    for pkg in ("peft", "bitsandbytes", "accelerate"):
+        try:
+            __import__(pkg)
+        except ImportError:
+            missing.append(pkg)
+    if missing:
+        subprocess.run(
+            [sys.executable, "-m", "pip", "install", "--no-input", *missing],
+            check=True,
+        )
+
     GITHUB_REPO = "pinkelephantlimited/phone-helper"
     REPO = Path.cwd() / "phone-helper"
     if not (REPO / "data").exists():
-        import subprocess
         subprocess.run(
             ["git", "clone", f"https://github.com/{GITHUB_REPO}.git", str(REPO)],
             check=True,
@@ -234,7 +246,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct"
+    MODEL_ID = "pinkelephantlimited/qwen2.5-vl-3b-instruct-nested"
     HUB_REPO = "pinkelephantlimited/phone-helper-vlm-3b"
     LR = mo.ui.number(1e-5, 1e-3, 2e-4, step=5e-5, label="learning rate")
     EPOCHS = mo.ui.number(1, 5, 1, step=0.5, label="epochs")
@@ -246,10 +258,25 @@ def _(mo):
 
 
 @app.cell
-def _(REPO):
+def _(HF_TOKEN, REPO, os):
+    import subprocess
+
+    os.environ["HF_TOKEN"] = HF_TOKEN.value or os.environ.get("HF_TOKEN", "")
+    if not (REPO / "data" / "multilingual").exists():
+        subprocess.run(
+            ["git", "clone",
+             "https://huggingface.co/datasets/pinkelephantlimited/"
+             "phone-helper-vlm-dataset",
+             str(REPO / "data" / "multilingual")],
+            check=True,
+            env=dict(os.environ),
+        )
     from train_vlm import train, load_dataset
 
-    paths = sorted((REPO / "data" / "multilingual").glob("*/train.jsonl"))
+    base = REPO / "data" / "multilingual"
+    paths = sorted((base / "data").glob("*/train.jsonl")) if (base / "data").exists() \
+        else sorted(base.glob("*/train.jsonl"))
+    paths = [p for p in paths if p.exists()]
     ds = load_dataset(paths)
     print(f"dataset rows: {len(ds)}")
     return ds, train
