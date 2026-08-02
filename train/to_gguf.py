@@ -36,8 +36,28 @@ def merge_lora(adapter: Path, base: str, out_dir: Path) -> None:
 
 
 def convert_to_gguf(llamacpp: Path, merged: Path, out: Path, quant: str = "q4_k_m") -> None:
+    """Convert HF -> GGUF f16 (with mmproj), then quantize.
+
+    Modern llama.cpp's convert_hf_to_gguf.py emits f16/f32/bf16 and requires a
+    separate llama-quantize step for K-quants like Q4_K_M.
+    """
     conv = llamacpp / "convert_hf_to_gguf.py"
-    subprocess.run(["python3", str(conv), str(merged), "--outfile", str(out), "--outtype", quant], check=True)
+    build = llamacpp / "build"
+    quant_bin = build / "bin" / "llama-quantize"
+    # temporary f16 file next to the final target
+    tmp = out.with_suffix(".f16.gguf")
+    subprocess.run(
+        ["python3", str(conv), str(merged), "--outfile", str(tmp),
+         "--outtype", "f16", "--model-name", "phone-helper-vlm-3b"],
+        check=True,
+    )
+    subprocess.run(
+        ["python3", str(conv), str(merged), "--outfile",
+         str(tmp.with_name(tmp.stem + "-mmproj.gguf")), "--outtype", "f16",
+         "--mmproj"],
+        check=True,
+    )
+    subprocess.run([str(quant_bin), str(tmp), str(out), quant], check=True)
 
 
 def main() -> None:
