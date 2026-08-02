@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import subprocess
+import sys
 from pathlib import Path
 
 from peft import PeftModel
@@ -44,15 +45,16 @@ def convert_to_gguf(llamacpp: Path, merged: Path, out: Path, quant: str = "q4_k_
     conv = llamacpp / "convert_hf_to_gguf.py"
     build = llamacpp / "build"
     quant_bin = build / "bin" / "llama-quantize"
+    py = sys.executable
     # temporary f16 file next to the final target
     tmp = out.with_suffix(".f16.gguf")
     subprocess.run(
-        ["python3", str(conv), str(merged), "--outfile", str(tmp),
+        [py, str(conv), str(merged), "--outfile", str(tmp),
          "--outtype", "f16", "--model-name", "phone-helper-vlm-3b"],
         check=True,
     )
     subprocess.run(
-        ["python3", str(conv), str(merged), "--outfile",
+        [py, str(conv), str(merged), "--outfile",
          str(tmp.with_name(tmp.stem + "-mmproj.gguf")), "--outtype", "f16",
          "--mmproj"],
         check=True,
