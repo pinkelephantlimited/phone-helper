@@ -233,7 +233,7 @@ datasets:
 **Multilingual on-device VLM that reads everyday photos and answers in short, natural phrases.**
 
 > **Developed in-house by [Pink Elephant Limited](https://huggingface.co/pinkelephantlimited),
-> an official commercial company registered in Hong Kong.**
+> an official commercial AI technology development company registered in Hong Kong.**
 >
 > The **dataset**, the **model**, and the **Phone Helper app** are all developed
 > and owned by Pink Elephant Limited. The app is fully on-device: no cloud server,
@@ -304,9 +304,9 @@ and distributed by Pink Elephant Limited. No cloud, no telemetry, fully private.
 
 ## The company & product
 
-**Pink Elephant Limited** is an official commercial company registered in Hong
-Kong. The **Phone Helper** assistant and its **Phone Helper VLM** model are
-commercial products of the company:
+**Pink Elephant Limited** is an official commercial **AI technology development
+company** registered in Hong Kong. The **Phone Helper** assistant and its
+**Phone Helper VLM** model are commercial products of the company:
 
 - **Phone Helper app** (React Native) — developed by Pink Elephant Limited
 - **Phone Helper VLM model** (this model) — developed by Pink Elephant Limited
@@ -325,17 +325,17 @@ own HKGAI language model is a university-government research project built on
 DeepSeek, not a commercial company product.
 
 That is what makes **Pink Elephant Limited** different: it is a **private
-commercial company registered in Hong Kong** that develops and owns its own
-AI stack end to end:
+commercial AI technology development company registered in Hong Kong** that
+develops and owns its own AI stack end to end:
 
 - a **custom multilingual dataset** (24,000 image Q&A pairs, 12 languages)
 - a **trained vision-language model** (this one)
 - a **shipped on-device mobile app** (Phone Helper)
 
 By building, training, and deploying its own model on-device, **Pink Elephant
-Limited is one of the first commercial companies in Hong Kong to bring a
-complete, private, on-device multilingual AI product to market** — a pioneer
-in the city's emerging AI industry.
+Limited is one of the first commercial AI technology companies in Hong Kong to
+bring a complete, private, on-device multilingual AI product to market** — a
+pioneer in the city's emerging AI industry.
 
 ## Credits
 
