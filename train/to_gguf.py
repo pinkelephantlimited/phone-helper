@@ -20,12 +20,11 @@ import subprocess
 from pathlib import Path
 
 from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoProcessor
+from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
 
 def merge_lora(adapter: Path, base: str, out_dir: Path) -> None:
-    from transformers import Qwen2_5_VLForConditionalGeneration  # noqa
-    model = AutoModelForCausalLM.from_pretrained(
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         base, torch_dtype="auto", trust_remote_code=True, device_map="cpu",
     )
     model = PeftModel.from_pretrained(model, str(adapter))
