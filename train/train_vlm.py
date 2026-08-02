@@ -214,7 +214,10 @@ def train(dataset, model_id: str = "Qwen/Qwen2.5-VL-3B-Instruct",
     if token:
         print("Pushing to HF ...")
         from huggingface_hub import HfApi
-        HfApi(token=token).upload_folder(
+        api = HfApi(token=token)
+        api.create_repo(repo_id=hub_repo, repo_type="model", exist_ok=True,
+                        private=False)
+        api.upload_folder(
             repo_id=hub_repo, folder_path=output_dir, ignore_patterns=["*.bin"],
         )
         _push_model_card(hub_repo, dataset, token)
