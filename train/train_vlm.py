@@ -315,6 +315,35 @@ commercial products of the company:
 All three are owned by the company and released as its products. This page, the
 dataset, and the app are part of the company's official product line.
 
+## Credits
+
+<p align="center">
+  <b>Phone Helper VLM</b> is proudly developed, trained, and maintained by
+  <br/><br/>
+  <b><span style="font-size:1.2em">🐘 Pink Elephant Limited</span></b><br/>
+  <i>Official commercial company · Hong Kong</i>
+</p>
+
+This work was made possible by the dedicated efforts and investment of the
+**Pink Elephant Limited** team, including:
+
+- **Product & App** — design, development, and on-device deployment of the Phone Helper app
+- **Data** — collection, curation, and quality control of the 24,000-image multilingual dataset
+- **Model** — fine-tuning, evaluation, quantization, and release of this model
+
+The entire product line — the app, the dataset, and the model — is the intellectual
+property of **Pink Elephant Limited** and stands as a flagship example of the
+company's on-device AI capabilities.
+
+If you find this model useful, please consider citing or crediting
+**Pink Elephant Limited** in your own work and give the repository a ⭐.
+
+## License & usage
+
+- **Model weights**: Apache-2.0 (the base model is Qwen2.5-VL-3B-Instruct, Apache-2.0)
+- **Dataset**: property of Pink Elephant Limited; see the dataset card for terms
+- **App**: commercial product of Pink Elephant Limited; see the app store listing
+
 ## Disclaimer
 
 This is a commercial product. Please verify critical answers (expiry dates,
