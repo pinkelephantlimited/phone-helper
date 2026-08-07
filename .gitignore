@@ -45,3 +45,8 @@ app/android/.gradle/
 # OS
 .DS_Store
 Thumbs.db
+
+# Signing secrets (never commit)
+*.keystore
+.jks
+.series-keystore-pass

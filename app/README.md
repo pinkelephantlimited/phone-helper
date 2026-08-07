@@ -19,7 +19,7 @@ app/
 │   ├── voice/             # whisper STT + TTS
 │   ├── i18n/              # 12-language UI strings
 │   └── screens/           # chat + camera + settings
-└── assets/models/         # bundled phone-helper-3b-q4.gguf + mmproj
+└── assets/models/         # bundled pink-elephant-talk-3b-q4.gguf + mmproj
 ```
 
 ## Model delivery

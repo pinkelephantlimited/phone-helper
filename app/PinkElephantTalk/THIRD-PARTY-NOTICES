@@ -1,0 +1,108 @@
+# Third-Party Notices
+
+Pink Elephant Talk includes or is built upon the following third-party software. Their
+licenses are acknowledged below. The Pink Elephant application and its Pink Elephant
+datasets are owned by Pink Elephant Limited. The base model and other components below
+are not our property and are used under their respective licenses.
+
+---
+
+## Qwen2.5-3B-Instruct
+
+- Model: Qwen2.5-3B-Instruct
+- Author: Alibaba Group (Qwen / Tongyi Qianwen team)
+- License: Apache License, Version 2.0 (3B and 7B tiers are Apache-2.0; larger tiers use the Qwen license)
+- Source: https://github.com/QwenLM/Qwen2.5
+- GGUF conversion (official): https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF
+- File: `qwen2.5-3b-instruct-q4_k_m.gguf`
+
+Pink Elephant Talk v4.0 used the above model under the Apache 2.0 license. **v5.0
+supersedes it with Qwen3-1.7B-Instruct (below).** We do not claim the base model as
+our own. The Apache License 2.0 text is available at:
+https://www.apache.org/licenses/LICENSE-2.0
+
+---
+
+## Qwen3-1.7B-Instruct
+
+- Model: Qwen3-1.7B-Instruct
+- Author: Alibaba Group (Qwen / Tongyi Qianwen team)
+- License: Apache License, Version 2.0
+- Source: https://github.com/QwenLM/Qwen3
+- GGUF conversion: https://huggingface.co/lm-kit/qwen-3-1.7b-instruct-gguf
+- File: `qwen3-1.7b-instruct-q4_k_m.gguf`
+
+Pink Elephant Talk v5.0, v6.0 and v6.1 use the above model under the Apache 2.0 license by
+preserving this notice. We do not claim the base model as our own. The Apache License
+2.0 text is available at: https://www.apache.org/licenses/LICENSE-2.0
+
+---
+
+## Qwen3-VL-2B-Thinking (current)
+
+- Model: Qwen3-VL-2B-Thinking
+- Author: Alibaba Group (Qwen / Tongyi Qianwen team)
+- License: Apache License, Version 2.0
+- Source: https://github.com/QwenLM/Qwen3-VL
+- GGUF conversion (official): https://huggingface.co/Qwen/Qwen3-VL-2B-Thinking-GGUF
+- Files: `Qwen3VL-2B-Thinking-Q4_K_M.gguf` (language model) and
+  `mmproj-Qwen3VL-2B-Thinking-Q8_0.gguf` (vision projector)
+
+Pink Elephant Talk v7.0 uses the above model under the Apache 2.0 license by
+preserving this notice. We do not claim the base model as our own. The Apache License
+2.0 text is available at: https://www.apache.org/licenses/LICENSE-2.0
+
+---
+
+## Web data sources (live answers)
+
+Pink Elephant Talk v6.0 fetches fresh data from public web sources when the user asks
+about live topics. Their terms are respected and they are attributed below:
+
+- **Open-Meteo** (weather geocoding + forecast) — © Open-Meteo.com.
+  Data is provided under the **Creative Commons Attribution 4.0 (CC BY 4.0)** license.
+  https://open-meteo.com/ , https://creativecommons.org/licenses/by/4.0/
+- **Google News RSS** (headline search) — served by Google for personal/non-commercial
+  reading. The application requests it only when the user explicitly asks for news.
+  https://news.google.com/
+- **Wikipedia REST API** (article summaries) — content © Wikipedia contributors,
+  released under the **CC BY-SA 4.0** and **GFDL** licenses.
+  https://en.wikipedia.org/api/rest_v1/
+
+---
+
+## llama.rn / llama.cpp
+
+- Project: llama.rn (https://github.com/myggday/llama.rn), which wraps llama.cpp
+- llama.cpp: https://github.com/ggerganov/llama.cpp
+- License: MIT
+
+---
+
+## React Native and dependencies
+
+- React Native: MIT License (https://github.com/facebook/react-native)
+- See `node_modules` package *LICENSE* files and the standard React Native dependency
+  notices for the full list.
+
+---
+
+## File and storage libraries
+
+- react-native-fs: MIT License (https://github.com/itinance/react-native-fs)
+
+---
+
+## pdfbox-android (PDF text extraction)
+
+- Project: pdfbox-android by Tom Roush
+  (https://github.com/TomRoush/PdfBox-Android)
+- License: Apache License, Version 2.0 (bundles Apache PDFBox code)
+- Used by Pink Elephant Talk v6.1 to extract text from attached .pdf documents.
+
+---
+
+This product uses the Qwen3-VL-2B-Thinking base model (Apache 2.0) without claiming
+ownership of it. The application, its code, and Pink Elephant datasets are owned by
+Pink Elephant Limited. Apache License 2.0 does not grant trademark rights; "Qwen" is a
+trademark of Alibaba.
