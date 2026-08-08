@@ -86,10 +86,8 @@ on-device chat assistant.
       b0e22e63c574bbfbc5c99d0d81551290bef57ee3b70691e2b55b329c4b5808a1.
       NOTE: on the CPU-only vivo, image processing is slow (encode ~80 s); on
       GPU-capable phones this is much faster.
-- [x] Pink Elephant Cleaner v1.0 — SAF storage cleanup, installed + verified
 - [x] Sleep / Compass / Pulse / Notes / Flashlight / Converter / Timer v1.0 —
       all installed + verified
-- [x] HF releases: pink-elephant-talk (Talk v4.0 APK), pink-elephant-cleaner (APK)
 - [ ] Play Store / direct APK distribution
 - [ ] Optional: non-i8mm OpenCL llama.rn variant for GPU speed on Snapdragon 865
       (documented follow-up — vivo blocks the i8mm path)

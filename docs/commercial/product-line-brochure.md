@@ -37,57 +37,49 @@ no cloud, no account and no API fee — your conversations never leave the phone
 
 ---
 
-## 2. Pink Elephant Cleaner — v1.0
-
-**Reclaim space, safely.** A storage overview plus a large-file finder that works
-through Android's Storage Access Framework. Pick a folder, review big files, batch
-delete with a space-reclaim confirmation. No permissions, no ads.
-
----
-
-## 3. Pink Elephant Sleep — v1.0
+## 2. Pink Elephant Sleep — v1.0
 
 **Fall asleep faster.** Calming sleep sounds (rain and more) with a countdown
 timer that stops playback automatically. Works fully offline.
 
 ---
 
-## 4. Pink Elephant Compass — v1.0
+## 3. Pink Elephant Compass — v1.0
 
 **Find your bearing.** A clean compass showing heading and direction, plus a spirit
 level for surface checking. Uses the phone's sensors, nothing else.
 
 ---
 
-## 5. Pink Elephant Pulse — v1.0
+## 4. Pink Elephant Pulse — v1.0
 
 **Know your phone.** A live monitor for battery (level, temperature, voltage,
 charging status), RAM, CPU and storage. Helpful, simple, offline.
 
 ---
 
-## 6. Pink Elephant Notes — v1.0
+## 5. Pink Elephant Notes — v1.0
 
 **Your notes, on your phone.** A fast, distraction-free text notebook. No accounts,
 no sync, no cloud — just your device.
 
 ---
 
-## 7. Pink Elephant Flashlight — v1.0
+## 6. Pink Elephant Flashlight — v1.0
 
 **Light when you need it.** One tap turns your phone's flash into a bright torch.
 The most dependable tool on your phone — because it is also the simplest.
 
 ---
 
-## 8. Pink Elephant Converter — v1.0
+## 7. Pink Elephant Converter — v1.0
 
 **Convert anything, offline.** Length, weight, temperature, currency-style unit
 conversions and more. Instant results, no internet required.
 
 ---
 
-## 9. Pink Elephant Timer — v1.0
+## 8. Pink Elephant Timer — v1.0
 
 **Count down or count up.** A straightforward countdown timer and stopwatch with
 clear alerts. Reliable, minimal, offline.

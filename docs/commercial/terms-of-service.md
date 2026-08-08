@@ -14,7 +14,7 @@ Pink Elephant apps are free consumer software that run **on your device**:
 - **Pink Elephant Talk** is an on-device AI chat assistant powered by an open-source
   base model (Apache-2.0, attribution in `THIRD-PARTY-NOTICES`). It can read text, see
   attached photos, read attached documents, and fetch public web data for live topics.
-- **Pink Elephant Cleaner, Sleep, Compass, Pulse, Notes, Flashlight, Converter and
+- **Pink Elephant Sleep, Compass, Pulse, Notes, Flashlight, Converter and
   Timer** are offline utilities.
 
 ## 2. License to you

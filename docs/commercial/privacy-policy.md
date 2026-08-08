@@ -2,8 +2,8 @@
 
 **Effective date:** 2026-08-05
 **Applies to:** all Pink Elephant Limited Android applications, including
-**Pink Elephant Talk**, **Pink Elephant Cleaner**, **Sleep**, **Compass**, **Pulse**,
-**Notes**, **Flashlight**, **Converter** and **Timer**.
+**Pink Elephant Talk**, **Sleep**, **Compass**, **Pulse**, **Notes**,
+**Flashlight**, **Converter** and **Timer**.
 
 ## The short version
 
@@ -29,7 +29,7 @@ your conversations.
 |---|---|---|
 | Pink Elephant Talk | **Internet** | One-time model download on first launch + optional live-fact lookup |
 | Pink Elephant Talk | **None** (picker-based) | Photos and documents are chosen through Android's system picker (Storage Access Framework); the app never reads your media library on its own |
-| Cleaner / Sleep / Compass / Pulse / Notes / Flashlight / Converter / Timer | **None** | Pure on-device utilities |
+| Sleep / Compass / Pulse / Notes / Flashlight / Converter / Timer | **None** | Pure on-device utilities |
 
 We do **not** request camera, microphone, contacts, location, or call-log
 permissions in any product.

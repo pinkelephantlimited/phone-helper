@@ -44,14 +44,13 @@ with Apache-2.0 open-source licensing.
 | # | Product | Purpose | Status |
 |---|---|---|---|
 | 1 | **Pink Elephant Talk** | On-device AI chat + photo + document + voice assistant (flagship) | v7.2 |
-| 2 | **Pink Elephant Cleaner** | Storage cleanup via SAF | v1.0 |
-| 3 | **Pink Elephant Sleep** | Sleep sounds + timer | v1.0 |
-| 4 | **Pink Elephant Compass** | Compass + spirit level | v1.0 |
-| 5 | **Pink Elephant Pulse** | Battery / RAM / CPU / storage monitor | v1.0 |
-| 6 | **Pink Elephant Notes** | Offline text notes | v1.0 |
-| 7 | **Pink Elephant Flashlight** | Torch / flash | v1.0 |
-| 8 | **Pink Elephant Converter** | Offline unit converter | v1.0 |
-| 9 | **Pink Elephant Timer** | Countdown / stopwatch | v1.0 |
+| 2 | **Pink Elephant Sleep** | Sleep sounds + timer | v1.0 |
+| 3 | **Pink Elephant Compass** | Compass + spirit level | v1.0 |
+| 4 | **Pink Elephant Pulse** | Battery / RAM / CPU / storage monitor | v1.0 |
+| 5 | **Pink Elephant Notes** | Offline text notes | v1.0 |
+| 6 | **Pink Elephant Flashlight** | Torch / flash | v1.0 |
+| 7 | **Pink Elephant Converter** | Offline unit converter | v1.0 |
+| 8 | **Pink Elephant Timer** | Countdown / stopwatch | v1.0 |
 
 All products share one design principle: **offline, permission-free, dependency-free**
 (except Talk, which needs internet once to download its model and optionally for
