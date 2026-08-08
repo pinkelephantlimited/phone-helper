@@ -22,10 +22,10 @@ language:
   - de
 pipeline_tag: image-text-to-text
 datasets:
-  - pinkelephantlimited/phone-helper-vlm-dataset
+  - pinkelephantlimited/pink-elephant-talk-vlm-dataset
 ---
 
-# Phone Helper VLM 3B
+# Pink Elephant Talk VLM 3B
 
 A fine-tuned, multilingual "daily helper" vision-language model that reads
 everyday photos (labels, expiry dates, prices, signs, menus, receipts,

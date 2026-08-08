@@ -1,4 +1,4 @@
-# Phone Helper — data
+# Pink Elephant Talk — data
 
 Two-step pipeline generates the training set entirely offline:
 

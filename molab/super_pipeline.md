@@ -1,4 +1,4 @@
-# Phone Helper — Full molab Pipeline
+# Pink Elephant Talk — Full molab Pipeline
 
 One notebook to build **everything**: dataset generation, multilingual
 translation, Hugging Face push, fine-tune Qwen2.5-VL-3B on the Blackwell GPU,
@@ -36,8 +36,8 @@ from pathlib import Path
 
 os.environ["HF_TOKEN"] = HF_TOKEN.value or os.environ.get("HF_TOKEN", "")
 
-GITHUB_REPO = "pinkelephantlimited/phone-helper"
-REPO = Path.cwd() / "phone-helper"
+GITHUB_REPO = "pinkelephantlimited/pink-elephant-talk"
+REPO = Path.cwd() / "pink-elephant-talk"
 if not (REPO / "data").exists():
     import subprocess
     subprocess.run(
@@ -132,14 +132,14 @@ mo.md(f"**Sample (es):** {sample['messages']}")
 
 ## 6. Push dataset to Hugging Face
 
-Streams JSONL + images to `pinkelephantlimited/phone-helper-vlm-dataset`.
+Streams JSONL + images to `pinkelephantlimited/pink-elephant-talk-vlm-dataset`.
 
 ```{python}
 from push_dataset import push_files
 
 push_files(src=REPO / "data" / "multilingual",
            images=REPO / "data" / "images",
-           repo="pinkelephantlimited/phone-helper-vlm-dataset",
+           repo="pinkelephantlimited/pink-elephant-talk-vlm-dataset",
            token=os.environ.get("HF_TOKEN", ""))
 ```
 
@@ -150,7 +150,7 @@ QLoRA fine-tune of Qwen2.5-VL-3B-Instruct, tuned for the 96GB Blackwell.
 
 ```{python}
 MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct"
-HUB_REPO = "pinkelephantlimited/phone-helper-vlm-3b"
+HUB_REPO = "pinkelephantlimited/pink-elephant-talk-vlm-3b"
 LR = mo.ui.number(1e-5, 1e-3, 2e-4, step=5e-5, label="learning rate")
 EPOCHS = mo.ui.number(1, 5, 1, step=0.5, label="epochs")
 BATCH = mo.ui.number(1, 8, 2, step=1, label="per-device batch size")
@@ -220,7 +220,7 @@ mo.md(f"**Model says:** {answer}")
 
 ## 10. Done
 
-- Dataset: `pinkelephantlimited/phone-helper-vlm-dataset`
-- Model: `pinkelephantlimited/phone-helper-vlm-3b`
+- Dataset: `pinkelephantlimited/pink-elephant-talk-vlm-dataset`
+- Model: `pinkelephantlimited/pink-elephant-talk-vlm-3b`
 
 Next (outside molab): convert to GGUF and bundle in the mobile app.

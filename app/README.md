@@ -1,4 +1,4 @@
-# Phone Helper mobile app (Phase 4)
+# Pink Elephant Talk mobile app (Phase 4)
 
 React Native app with the trained model **bundled inside the install**.
 

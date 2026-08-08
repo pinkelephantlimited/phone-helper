@@ -11,7 +11,7 @@ Prereq: llama.cpp built locally (or use official llama-cpp-python tools).
 
 Usage:
     python to_gguf.py --adapter <lora-dir> --base Qwen/Qwen2.5-VL-3B-Instruct \
-        --llamacpp ../llama.cpp --out ../models/phone-helper-3b-q4.gguf
+        --llamacpp ../llama.cpp --out ../models/pink-elephant-talk-3b-q4.gguf
 """
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ def convert_to_gguf(llamacpp: Path, merged: Path, out: Path, quant: str = "q4_k_
     tmp = out.with_suffix(".f16.gguf")
     subprocess.run(
         [py, str(conv), str(merged), "--outfile", str(tmp),
-         "--outtype", "f16", "--model-name", "phone-helper-vlm-3b"],
+         "--outtype", "f16", "--model-name", "pink-elephant-talk-vlm-3b"],
         check=True,
     )
     subprocess.run(
@@ -80,7 +80,7 @@ def main() -> None:
 
     print("Converting to GGUF ...")
     convert_to_gguf(Path(args.llamacpp).resolve(), merged,
-                    out_dir / f"phone-helper-3b-{args.quant}.gguf", args.quant)
+                    out_dir / f"pink-elephant-talk-3b-{args.quant}.gguf", args.quant)
     print(f"Done: {out_dir}")
 
 

@@ -25,7 +25,7 @@
 **Notes**
 
 - APK: `PinkElephantTalk-v7.2.apk` — SHA-256 `e076fff4086cf8f9f5d896b104ad07bfb363b02486b9f4f15f9f54ef06d01431`.
-- Package: `com.pinkelephant.talk` (renamed from `com.phonehelper`).
+- Package: `com.pinkelephant.talk`.
 - Version **7.2**, versionCode **12** (rebuilt), signed with the Pink Elephant Limited series keystore.
 
 ## v7.1 — 2026-08-05 · Voice output (text-to-speech)

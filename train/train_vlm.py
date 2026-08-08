@@ -225,17 +225,17 @@ language:
 library_name: transformers
 pipeline_tag: image-text-to-text
 datasets:
-  - pinkelephantlimited/phone-helper-vlm-dataset
+  - pinkelephantlimited/pink-elephant-talk-vlm-dataset
 ---
 
-# Phone Helper VLM 3B
+# Pink Elephant Talk VLM 3B
 
 **Multilingual on-device VLM that reads everyday photos and answers in short, natural phrases.**
 
 > **Developed in-house by [Pink Elephant Limited](https://huggingface.co/pinkelephantlimited),
 > an official commercial AI technology development company registered in Hong Kong.**
 >
-> The **dataset**, the **model**, and the **Phone Helper app** are all developed
+> The **dataset**, the **model**, and the **Pink Elephant Talk app** are all developed
 > and owned by Pink Elephant Limited. The app is fully on-device: no cloud server,
 > no account, and no data ever leaves your phone.
 
@@ -266,9 +266,9 @@ Portuguese, Russian, Indonesian, Swahili, Bengali, German (12 languages).
 
 ## Training
 
-- **Dataset**: `pinkelephantlimited/phone-helper-vlm-dataset` — 24,000 image
+- **Dataset**: `pinkelephantlimited/pink-elephant-talk-vlm-dataset` — 24,000 image
   Q&A pairs across 12 languages and 5 task families, **collected, cleaned, and
-  curated in-house by Pink Elephant Limited** for the Phone Helper app.
+  curated in-house by Pink Elephant Limited** for the Pink Elephant Talk app.
 - **Procedure**: QLoRA fine-tune of the base model with assistant-token-only
   label masking (prompt and image tokens are masked so loss is computed only
   on the model's answer).
@@ -299,18 +299,18 @@ English, etc.).
 ## Deployment
 
 The trained adapter is exported to **GGUF** (via `train/to_gguf.py`) and bundled
-with the Qwen2.5-VL runtime in the **Phone Helper** React Native app, developed
+with the Qwen2.5-VL runtime in the **Pink Elephant Talk** React Native app, developed
 and distributed by Pink Elephant Limited. No cloud, no telemetry, fully private.
 
 ## The company & product
 
 **Pink Elephant Limited** is an official commercial **AI technology development
-company** registered in Hong Kong. The **Phone Helper** assistant and its
-**Phone Helper VLM** model are commercial products of the company:
+company** registered in Hong Kong. The **Pink Elephant Talk** assistant and its
+**Pink Elephant Talk VLM** model are commercial products of the company:
 
-- **Phone Helper app** (React Native) — developed by Pink Elephant Limited
-- **Phone Helper VLM model** (this model) — developed by Pink Elephant Limited
-- **Phone Helper VLM dataset** — developed by Pink Elephant Limited
+- **Pink Elephant Talk app** (React Native) — developed by Pink Elephant Limited
+- **Pink Elephant Talk VLM model** (this model) — developed by Pink Elephant Limited
+- **Pink Elephant Talk VLM dataset** — developed by Pink Elephant Limited
 
 All three are owned by the company and released as its products. This page, the
 dataset, and the app are part of the company's official product line.
@@ -330,7 +330,7 @@ develops and owns its own AI stack end to end:
 
 - a **custom multilingual dataset** (24,000 image Q&A pairs, 12 languages)
 - a **trained vision-language model** (this one)
-- a **shipped on-device mobile app** (Phone Helper)
+- a **shipped on-device mobile app** (Pink Elephant Talk)
 
 By building, training, and deploying its own model on-device, **Pink Elephant
 Limited is one of the first commercial AI technology companies in Hong Kong to
@@ -340,7 +340,7 @@ pioneer in the city's emerging AI industry.
 ## Credits
 
 <p align="center">
-  <b>Phone Helper VLM</b> is proudly developed, trained, and maintained by
+  <b>Pink Elephant Talk VLM</b> is proudly developed, trained, and maintained by
   <br/><br/>
   <b><span style="font-size:1.2em">🐘 Pink Elephant Limited</span></b><br/>
   <i>Official commercial company · Hong Kong</i>
@@ -349,7 +349,7 @@ pioneer in the city's emerging AI industry.
 This work was made possible by the dedicated efforts and investment of the
 **Pink Elephant Limited** team — a pioneering AI company in Hong Kong — including:
 
-- **Product & App** — design, development, and on-device deployment of the Phone Helper app
+- **Product & App** — design, development, and on-device deployment of the Pink Elephant Talk app
 - **Data** — collection, curation, and quality control of the 24,000-image multilingual dataset
 - **Model** — fine-tuning, evaluation, quantization, and release of this model
 
@@ -384,7 +384,7 @@ https://huggingface.co/pinkelephantlimited
 
 
 def train(dataset, model_id: str = "Qwen/Qwen2.5-VL-3B-Instruct",
-          hub_repo: str = "pinkelephantlimited/phone-helper-vlm-3b",
+          hub_repo: str = "pinkelephantlimited/pink-elephant-talk-vlm-3b",
           output_dir: str = "output", lr: float = 2e-4, epochs: float = 1.0,
           max_steps: int = 0, batch: int = 2, grad_accum: int = 8,
           max_len: int = 1536, lora_r: int = 32, lora_alpha: int = 64,
@@ -468,7 +468,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="../data/multilingual")
     ap.add_argument("--model", default="pinkelephantlimited/qwen2.5-vl-3b-instruct-nested")
-    ap.add_argument("--out", default="pinkelephantlimited/phone-helper-vlm-3b")
+    ap.add_argument("--out", default="pinkelephantlimited/pink-elephant-talk-vlm-3b")
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--epochs", type=float, default=1.0)
     ap.add_argument("--max-steps", type=int, default=0)

@@ -15,7 +15,7 @@ on-device chat assistant.
 ## Phase 2 — Train (DONE)
 - [x] `train/train_vlm.py`: QLoRA fine-tune of Qwen2.5-VL-3B-Instruct, eval-loss
       tracking, HF push
-- [x] Adapter + model card on HF (pinkelephantlimited/phone-helper-vlm-3b)
+- [x] Adapter + model card on HF (pinkelephantlimited/pink-elephant-talk-vlm-3b)
 - [x] GGUF conversion + quantization (Q4_K_M + f16 mmproj)
 
 ## Phase 3 — On-device inference (DONE, superseded)

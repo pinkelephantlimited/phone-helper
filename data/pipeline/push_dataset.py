@@ -6,7 +6,7 @@ snapshot-downloads the repo and builds the dataset from paths.
 
 Usage:
     export HF_TOKEN=hf_xxx
-    python push_dataset.py --src ../multilingual --repo pinkelephantlimited/phone-helper-vlm-dataset
+    python push_dataset.py --src ../multilingual --repo pinkelephantlimited/pink-elephant-talk-vlm-dataset
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from huggingface_hub import HfApi
 
 def push_files(src: str | Path = "../multilingual",
                images: str | Path = "../images",
-               repo: str = "pinkelephantlimited/phone-helper-vlm-dataset",
+               repo: str = "pinkelephantlimited/pink-elephant-talk-vlm-dataset",
                token: str = "") -> None:
     """Stream JSONL + image files to a HF dataset repo (no giant parquet)."""
     api = HfApi(token=token or None)
@@ -46,7 +46,7 @@ def push_files(src: str | Path = "../multilingual",
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", default="../multilingual")
-    ap.add_argument("--repo", default="pinkelephantlimited/phone-helper-vlm-dataset")
+    ap.add_argument("--repo", default="pinkelephantlimited/pink-elephant-talk-vlm-dataset")
     ap.add_argument("--also-images", default="../images",
                     help="root dir holding the per-language image subfolders")
     args = ap.parse_args()

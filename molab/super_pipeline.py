@@ -7,7 +7,7 @@ app = marimo.App()
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Phone Helper — Full molab Pipeline
+    # Pink Elephant Talk — Full molab Pipeline
 
     One notebook to build **everything**: dataset generation, multilingual
     translation, Hugging Face push, fine-tune Qwen2.5-VL-3B on the Blackwell GPU,
@@ -73,8 +73,8 @@ def _(HF_TOKEN):
             check=True,
         )
 
-    GITHUB_REPO = "pinkelephantlimited/phone-helper"
-    REPO = Path.cwd() / "phone-helper"
+    GITHUB_REPO = "pinkelephantlimited/pink-elephant-talk"
+    REPO = Path.cwd() / "pink-elephant-talk"
     if not (REPO / "data").exists():
         subprocess.run(
             ["git", "clone", f"https://github.com/{GITHUB_REPO}.git", str(REPO)],
@@ -217,7 +217,7 @@ def _(mo):
     mo.md(r"""
     ## 6. Push dataset to Hugging Face
 
-    Streams JSONL + images to `pinkelephantlimited/phone-helper-vlm-dataset`.
+    Streams JSONL + images to `pinkelephantlimited/pink-elephant-talk-vlm-dataset`.
     """)
     return
 
@@ -228,7 +228,7 @@ def _(REPO, os):
 
     push_files(src=REPO / "data" / "multilingual",
                images=REPO / "data" / "images",
-               repo="pinkelephantlimited/phone-helper-vlm-dataset",
+               repo="pinkelephantlimited/pink-elephant-talk-vlm-dataset",
                token=os.environ.get("HF_TOKEN", ""))
     return
 
@@ -247,7 +247,7 @@ def _(mo):
 @app.cell
 def _(mo):
     MODEL_ID = "pinkelephantlimited/qwen2.5-vl-3b-instruct-nested"
-    HUB_REPO = "pinkelephantlimited/phone-helper-vlm-3b"
+    HUB_REPO = "pinkelephantlimited/pink-elephant-talk-vlm-3b"
     LR = mo.ui.number(1e-5, 1e-3, 2e-4, step=5e-5, label="learning rate")
     EPOCHS = mo.ui.number(1, 5, 1, step=0.5, label="epochs")
     BATCH = mo.ui.number(1, 8, 2, step=1, label="per-device batch size")
@@ -266,7 +266,7 @@ def _(HF_TOKEN, REPO, os):
         subprocess.run(
             ["git", "clone",
              "https://huggingface.co/datasets/pinkelephantlimited/"
-             "phone-helper-vlm-dataset",
+             "pink-elephant-talk-vlm-dataset",
              str(REPO / "data" / "multilingual")],
             check=True,
             env=dict(os.environ),
@@ -366,8 +366,8 @@ def _(mo):
     mo.md(r"""
     ## 10. Done
 
-    - Dataset: `pinkelephantlimited/phone-helper-vlm-dataset`
-    - Model: `pinkelephantlimited/phone-helper-vlm-3b`
+    - Dataset: `pinkelephantlimited/pink-elephant-talk-vlm-dataset`
+    - Model: `pinkelephantlimited/pink-elephant-talk-vlm-3b`
 
     Next (outside molab): convert to GGUF and bundle in the mobile app.
     """)

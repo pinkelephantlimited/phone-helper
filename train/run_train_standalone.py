@@ -3,7 +3,7 @@
 Usage:
     HF_TOKEN=... python run_train_standalone.py \
         --model pinkelephantlimited/qwen2.5-vl-3b-instruct-nested \
-        --out pinkelephantlimited/phone-helper-vlm-3b \
+        --out pinkelephantlimited/pink-elephant-talk-vlm-3b \
         --data ../data/multilingual
 
 Runs detached so a client disconnect cannot kill training.
@@ -23,7 +23,7 @@ ROOT = Path("/marimo")
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="pinkelephantlimited/qwen2.5-vl-3b-instruct-nested")
-    ap.add_argument("--out", default="pinkelephantlimited/phone-helper-vlm-3b")
+    ap.add_argument("--out", default="pinkelephantlimited/pink-elephant-talk-vlm-3b")
     ap.add_argument("--data", default=str(REPO / "data" / "multilingual"))
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--epochs", type=float, default=1.0)
