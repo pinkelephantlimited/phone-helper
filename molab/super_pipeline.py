@@ -246,7 +246,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    MODEL_ID = "pinkelephantlimited/qwen2.5-vl-3b-instruct-nested"
+    MODEL_ID = "pinkelephantlimited/pink-elephant-vlm-nested"
     HUB_REPO = "pinkelephantlimited/pink-elephant-talk-vlm-3b"
     LR = mo.ui.number(1e-5, 1e-3, 2e-4, step=5e-5, label="learning rate")
     EPOCHS = mo.ui.number(1, 5, 1, step=0.5, label="epochs")

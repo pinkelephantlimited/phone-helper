@@ -467,7 +467,7 @@ def train(dataset, model_id: str = "Qwen/Qwen2.5-VL-3B-Instruct",
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="../data/multilingual")
-    ap.add_argument("--model", default="pinkelephantlimited/qwen2.5-vl-3b-instruct-nested")
+    ap.add_argument("--model", default="pinkelephantlimited/pink-elephant-vlm-nested")
     ap.add_argument("--out", default="pinkelephantlimited/pink-elephant-talk-vlm-3b")
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--epochs", type=float, default=1.0)
